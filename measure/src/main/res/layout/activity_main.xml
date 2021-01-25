@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_con_opt1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Switch
+            android:id="@+id/switchDis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GroupDis" />
+
+        <Switch
+            android:id="@+id/switchInt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GroupInt" />
+
+        <Switch
+            android:id="@+id/switchTouchEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GroupEve" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_con_opt2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_con_opt1">
+
+        <Switch
+            android:id="@+id/switchDisView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ViewDis" />
+
+
+        <Switch
+            android:id="@+id/switchTouchEventView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ViewEve" />
+
+
+    </LinearLayout>
+
+    <com.tbb.vip.measure.MyViewGroup
+        android:id="@+id/myViewGroup"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="#f4f4f4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_con_opt2">
+
+        <com.tbb.vip.measure.MyView
+            android:id="@+id/myView"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="#ff00ff" />
+    </com.tbb.vip.measure.MyViewGroup>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/myViewGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/tv_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            />
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
