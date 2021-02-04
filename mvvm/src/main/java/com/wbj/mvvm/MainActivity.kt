@@ -28,5 +28,7 @@ class MainActivity : AppCompatActivity() {
 //            user?.lastName = "少时诵诗书"
             binding.user = User("吾问无为谓","少时诵诗书")
         },2000)
+
+
     }
 }

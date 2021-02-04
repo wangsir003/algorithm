@@ -24,6 +24,7 @@
 
 
 
+
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
@@ -38,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@{user.lastName}"
+            android:text='@{user.lastName}'
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_name" />
