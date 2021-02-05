@@ -56,5 +56,15 @@ public class MyViewModel extends ViewModel {
         aTeamScore.setValue(aBack);
         bTeamScore.setValue(bBack);
     }
+
+    public String getResult(){
+        if (getaTeamScore() == getbTeamScore()){
+            return "平局";
+        }else if (getaTeamScore().getValue() > getbTeamScore().getValue()){
+            return "A领先";
+        }else {
+            return "B领先";
+        }
+    }
 }
 

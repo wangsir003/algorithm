@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.wbj.mvvm.databinding.MainActivityBinding
 import com.wbj.mvvm.model.User
@@ -28,6 +29,11 @@ class MainActivity : AppCompatActivity() {
 //            user?.lastName = "少时诵诗书"
             binding.user = User("吾问无为谓","少时诵诗书")
         },2000)
+
+    findViewById<View>(R.id.tv_to_viewmodel).setOnClickListener {
+        ViewModelActivity.start(this)
+    }
+
 
 
     }

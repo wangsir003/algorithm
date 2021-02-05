@@ -15,7 +15,6 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#f4f4f4"
@@ -23,7 +22,15 @@
 
 
 
-
+        <TextView
+            android:id="@+id/tv_to_viewmodel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="viewmodel使用"/>
 
         <TextView
             android:id="@+id/tv_name"
@@ -33,7 +40,8 @@
             android:text="@{user.firstName}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tv_to_viewmodel" />
+
         <TextView
             android:id="@+id/tv_lastname"
             android:layout_width="match_parent"
