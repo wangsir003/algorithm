@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 public class MyViewModel extends ViewModel {
     private MutableLiveData<Integer> aTeamScore; //a队的分数
     private MutableLiveData<Integer> bTeamScore; //b队的分数
+    private MutableLiveData<String> mResult; //比赛结果
     private int aBack,bBack; //用于Undo操作的上一次各队分数
 
     //普通的Get方法
@@ -57,14 +58,19 @@ public class MyViewModel extends ViewModel {
         bTeamScore.setValue(bBack);
     }
 
-    public String getResult(){
-        if (getaTeamScore() == getbTeamScore()){
-            return "平局";
-        }else if (getaTeamScore().getValue() > getbTeamScore().getValue()){
-            return "A领先";
-        }else {
-            return "B领先";
+    public MutableLiveData<String> getResult(){
+        if (mResult == null){ //处理空指针异常
+            mResult = new MutableLiveData<>();
         }
+        if (getaTeamScore().getValue() == getbTeamScore().getValue()){
+            mResult.setValue("平局");
+        }else if (getaTeamScore().getValue() > getbTeamScore().getValue()){
+            mResult.setValue("A领先");
+        }else {
+            mResult.setValue("B领先");
+        }
+        return mResult;
+
     }
 }
 

@@ -3,8 +3,10 @@ package com.wbj.mvvm;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,9 +47,18 @@ public class ViewModelActivity extends AppCompatActivity {
 
         tvAddA.setOnClickListener(v -> {
             myViewModel.aTeamAdd(2);
+            tvAddA.postDelayed(() -> {
+                myViewModel.getResult();
+                Log.e("ViewModelActivity","tvAddA");
+            }, 2000);
         });
         tvAddB.setOnClickListener(v -> {
-            myViewModel.aTeamAdd(2);
+            myViewModel.bTeamAdd(2);
+
+            tvAddB.postDelayed(() -> {
+//                myViewModel.getResult();
+                Log.e("ViewModelActivity","tvAddB");
+            }, 2000);
         });
 
 
