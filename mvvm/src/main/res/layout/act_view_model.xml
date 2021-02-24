@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="ViewModelActivityBing">
+        <variable
+            name="data"
+            type="com.wbj.mvvm.viewmodel.MyViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/black"
+            android:textSize="40dp"
+            android:text="@{data.getResult()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_a_score"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_result"
+            android:background="#f4f4f4"
+            android:text="@{String.valueOf(data.getaTeamScore())}"
+            android:layout_margin="50dp"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+        <TextView
+            android:id="@+id/tv_add_a"
+            app:layout_constraintStart_toStartOf="@id/tv_a_score"
+            app:layout_constraintEnd_toEndOf="@id/tv_a_score"
+            app:layout_constraintTop_toBottomOf="@id/tv_a_score"
+            android:background="#666666"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            android:text="添加 + 2"
+            android:layout_width="100dp"
+            android:layout_height="40dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_b_score"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_result"
+            android:background="#f4f4f4"
+            android:layout_margin="50dp"
+            android:text="@{String.valueOf(data.getbTeamScore())}"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+        <TextView
+            android:id="@+id/tv_add_b"
+            app:layout_constraintStart_toStartOf="@id/tv_b_score"
+            app:layout_constraintEnd_toEndOf="@id/tv_b_score"
+            app:layout_constraintTop_toBottomOf="@id/tv_b_score"
+            android:background="#666666"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            android:text="添加 + 2"
+            android:layout_width="100dp"
+            android:layout_height="40dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
