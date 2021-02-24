@@ -1,5 +1,6 @@
 package com.tbb.vip.measure;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
@@ -15,12 +16,12 @@ public class TouchLoger {
         return logger;
     }
 
-    private boolean isDispatchOfGroup = true;
-    private boolean isIntercepthOfGroup = true;
-    private boolean isTouchEventOfGroup = true;
+    private boolean isDispatchOfGroup = false;
+    private boolean isIntercepthOfGroup = false;
+    private boolean isTouchEventOfGroup = false;
 
-    private boolean isDispatchOfView = true;
-    private boolean isTouchEventOfView = true;
+    private boolean isDispatchOfView = false;
+    private boolean isTouchEventOfView = false;
 
     private StringBuilder sb = new StringBuilder();
 
@@ -77,7 +78,7 @@ public class TouchLoger {
         sb.delete(0,sb.length());
     }
 
-    public void logE(String TAG, String method, MotionEvent event){
+    public void logE(String TAG, String method, MotionEvent event,boolean isDeal){
         sb.append(TAG);
         sb.append("--");
         sb.append(method);
@@ -85,16 +86,31 @@ public class TouchLoger {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 sb.append("DOWN");
+                Log.e(TAG,method + "|DOWN | " + isDeal);
+                logStatus();
                 break;
             case MotionEvent.ACTION_MOVE:
                 sb.append("MOVE");
+                Log.e(TAG,method + "|MOVE | " + isDeal);
+                logStatus();
                 break;
             case MotionEvent.ACTION_UP:
                 sb.append("UP");
+                Log.e(TAG,method + "|UP | " + isDeal);
+                logStatus();
                 break;
         }
+        sb.append(" | ").append(isDeal);
         sb.append("\n");
         tvLog.setText(sb);
+    }
+
+    private void logStatus(){
+//        Log.e("MyView","isDispatchOfGroup-" + isDispatchOfGroup);
+//        Log.e("MyView","isIntercepthOfGroup-" + isIntercepthOfGroup);
+//        Log.e("MyView","isTouchEventOfGroup-" + isTouchEventOfGroup);
+//        Log.e("MyView","isDispatchOfView-" + isDispatchOfView);
+//        Log.e("MyView","isTouchEventOfView-" + isTouchEventOfView);
     }
 
     private TextView tvLog;

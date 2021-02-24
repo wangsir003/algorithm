@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -39,14 +40,23 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
         TextView tvLog = findViewById(R.id.tv_log);
         View myView = findViewById(R.id.myView);
+        ViewGroup myViewGroup = findViewById(R.id.myViewGroup);
         TouchLoger.getInstance().setTextView(tvLog);
-        myView.setOnTouchListener(new View.OnTouchListener() {
+//        myView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+////                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+////                    TouchLoger.getInstance().clearLog();
+////                }
+//                return false;
+//            }
+//        });
+
+        myView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-//                    TouchLoger.getInstance().clearLog();
-//                }
-                return false;
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "点击了myView", Toast.LENGTH_SHORT).show();
+//                TouchLoger.getInstance().clearLog();
             }
         });
 
@@ -54,6 +64,13 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "点击了myView", Toast.LENGTH_SHORT).show();
+//                TouchLoger.getInstance().clearLog();
+            }
+        });
+        myViewGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "点击了myViewGroup", Toast.LENGTH_SHORT).show();
 //                TouchLoger.getInstance().clearLog();
             }
         });
