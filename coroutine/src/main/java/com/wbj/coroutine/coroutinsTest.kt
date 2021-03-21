@@ -35,7 +35,7 @@ fun main() {
 //            val result2= withContext(Dispatchers.IO){
 //                analogRequest2()
 //            }
-        val result2 = asuspendAnalogRequest2()
+        val result2 = suspendAnalogRequest2()
         println(result2)
         val end2 = System.currentTimeMillis()
 
@@ -61,7 +61,7 @@ fun main() {
 /**
  * 模拟耗时的网络请求2
  */
-private fun analogRequest1():String{
+fun analogRequest1():String{
     var sum = 0
     repeat(10000000){
         sum += it
@@ -89,6 +89,6 @@ private fun analogRequest2():String{
 /**
  * 模拟耗时的网络请求
  */
-private suspend fun asuspendAnalogRequest2():String{
+private suspend fun suspendAnalogRequest2():String{
     return analogRequest2()
 }

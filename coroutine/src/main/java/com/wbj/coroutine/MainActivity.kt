@@ -48,6 +48,8 @@ class MainActivity : AppCompatActivity() {
             val result1 = suspendAnalogRequest1()
             val end = System.currentTimeMillis()
 
+            cancel()//TODO取消
+
             //模拟耗时操作2
             val start2 = System.currentTimeMillis()
 //            val result2= withContext(Dispatchers.IO){
@@ -78,26 +80,32 @@ class MainActivity : AppCompatActivity() {
      * 模拟耗时的网络请求2
      */
     private fun analogRequest1():String{
-        var sum = 0
-        repeat(10000000){
-            sum += it
+
+            var sum = 0
+            repeat(10000000){
+                sum += it
+            }
+            Thread.sleep(200)
+            return "结果：$sum"
         }
-        return "结果：$sum"
+
     }
     /**
      * 模拟耗时的网络请求2
      */
     private suspend fun  suspendAnalogRequest1():String{
-        return analogRequest1()
+        return withContext(Dispatchers.IO) {
+             analogRequest1()
+        }
     }
 
     /**
      * 模拟耗时的网络请求
      */
     private fun analogRequest2():String{
-        var sum = 0
+        var sum:Long = 0
         repeat(100000000){
-            sum += it
+            sum += it * 17985 + 14532
         }
         return "结果：$sum"
     }
@@ -105,8 +113,9 @@ class MainActivity : AppCompatActivity() {
      * 模拟耗时的网络请求
      */
     private suspend fun asuspendAnalogRequest2():String{
-        return analogRequest2()
+        return withContext(Dispatchers.IO) {
+            analogRequest2()
+        }
     }
 
 
-}

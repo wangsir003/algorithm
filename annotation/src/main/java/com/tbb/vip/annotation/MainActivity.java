@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
             Method method = userClass.getMethod("getUser", String.class, String.class);
             method.invoke(user,"李四","33");
 
+
             if (method.isAnnotationPresent(MyAnnotation.class)){
                 MyAnnotation annotation = method.getAnnotation(MyAnnotation.class);
                 String[] value = annotation.value();
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
                     Log.e(TAG,"v->没有这个注解");
 
             }
+
+
+            method.invoke(user.aaa,user.age,user.name,"李四","名字","年龄");
 
 
 
@@ -47,8 +51,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class User{
+        @MyAnnotation("sss")
+        String aaa;
         String name;
         String age;
+
 
         @MyAnnotation(value = {"张三","23"})
         public void getUser(String name,String age){

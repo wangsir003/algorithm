@@ -12,8 +12,8 @@ import java.lang.reflect.Method;
  */
 
 @Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD,ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME) //作用时机：类CLASS 运行时RUNTIME 资源SOURCE
+@Target({ElementType.METHOD,ElementType.CONSTRUCTOR}) //作用位置：方法：变量,CONSTRUCTOR 等
 @interface MyAnnotation {
     int id() default 0;
     String[] value();
