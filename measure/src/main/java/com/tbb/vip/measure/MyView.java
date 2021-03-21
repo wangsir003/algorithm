@@ -38,8 +38,9 @@ public class MyView extends View {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        TouchLoger.getInstance().logE(TAG,"dispatchTouchEvent",ev);
+        TouchLoger.getInstance().logE(TAG,"dispatchTouchEvent",ev,TouchLoger.getInstance().isDispatchOfView());
 
+        super.dispatchTouchEvent(ev);
         return TouchLoger.getInstance().isDispatchOfView();
     }
 
@@ -47,7 +48,8 @@ public class MyView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        TouchLoger.getInstance().logE(TAG,"MotionEvent",event);
+        TouchLoger.getInstance().logE(TAG,"MotionEvent",event,TouchLoger.getInstance().isTouchEventOfView());
+        super.onTouchEvent(event);
         return TouchLoger.getInstance().isTouchEventOfView();
     }
 

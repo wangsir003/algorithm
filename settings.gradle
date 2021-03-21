@@ -1,3 +1,4 @@
+include ':annotation'
 include ':coroutine'
 include ':ipccommunicatation'
 include ':mvvm'
