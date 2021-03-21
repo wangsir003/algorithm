@@ -28,6 +28,13 @@ public class OkHttpUtil {
                 .addHeader("","")
                 .build();
 //        Call call = new Call
+        try {
+            Response execute = okHttpClient.newCall(request).execute();
+            execute.body().toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {

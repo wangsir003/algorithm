@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 //            Log.e("交集：", arr[i].toString() + "")
 //        }
 
+
+        ViewGroup
         int[] arr = new int[10];
         for (int i = 0;i < 10 ;i++){
             arr[i] = (int) (Math.random() * 10);

@@ -1,3 +1,5 @@
+include ':coroutine'
+include ':ipccommunicatation'
 include ':mvvm'
 include ':measure'
 include ':javatest'

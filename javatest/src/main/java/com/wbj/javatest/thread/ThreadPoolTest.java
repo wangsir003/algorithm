@@ -17,7 +17,7 @@ public class ThreadPoolTest {
     public static void main(String[] args) {
 
         final ThreadPoolExecutor service = new ThreadPoolExecutor(0,1000,10, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
-        new ThreadPoolExecutor()
+//        new ThreadPoolExecutor()
 
         for (int i = 0; i < 1000; i++) {
             Runnable runnable = new Runnable() {

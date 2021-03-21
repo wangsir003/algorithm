@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<MainActivityBinding>(this,R.layout.activity_main)
+
         var user = User("涨","停")
         binding.user = User("涨","停")
         binding.isShow = false
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             this.firstName = "jfjfjfj"
             this.lastName = "jfjfjfj"
         })
-        Log.e("MainActivity","first-")
+    Log.e("MainActivity","first-")
         Handler().postDelayed({
 //            val user = binding.user//更新值无用
 //            user?.firstName = "吾问无为谓"
@@ -30,9 +31,9 @@ class MainActivity : AppCompatActivity() {
             binding.user = User("吾问无为谓","少时诵诗书")
         },2000)
 
-    findViewById<View>(R.id.tv_to_viewmodel).setOnClickListener {
-        ViewModelActivity.start(this)
-    }
+        findViewById<View>(R.id.tv_to_viewmodel).setOnClickListener {
+            ViewModelActivity.start(this)
+        }
 
 
 

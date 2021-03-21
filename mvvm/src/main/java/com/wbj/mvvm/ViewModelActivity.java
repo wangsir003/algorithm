@@ -24,7 +24,7 @@ import com.wbj.mvvm.viewmodel.MyViewModel;
  * 版权所有：特抱抱（杭州）科技有限公司
  * 开发者： apple
  * 创建日期：2021/2/4 下午3:23
- * 描述：
+ * 描述：ViewModel使用
  */
 public class ViewModelActivity extends AppCompatActivity {
 
@@ -37,8 +37,8 @@ public class ViewModelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ViewModelActivityBing binding = DataBindingUtil.setContentView(this, R.layout.act_view_model);
         MyViewModel myViewModel = new ViewModelProvider.NewInstanceFactory().create(MyViewModel.class);
-        binding.setData(myViewModel);
-        binding.setLifecycleOwner(this);
+        binding.setData(myViewModel);//设置ViewModel
+        binding.setLifecycleOwner(this);// 关联生命周期
 
         TextView tvAddA = findViewById(R.id.tv_add_a);
         TextView tvAddB = findViewById(R.id.tv_add_b);
@@ -46,18 +46,21 @@ public class ViewModelActivity extends AppCompatActivity {
         TextView tvScoreB = findViewById(R.id.tv_b_score);
 
         tvAddA.setOnClickListener(v -> {
-            myViewModel.aTeamAdd(2);
+//            myViewModel.aTeamAdd(2);
+//            myViewModel.getResult();
             tvAddA.postDelayed(() -> {
+                myViewModel.aTeamAdd(2);
                 myViewModel.getResult();
-                Log.e("ViewModelActivity","tvAddA");
+//                Log.e("ViewModelActivity","tvAddA");
             }, 2000);
         });
         tvAddB.setOnClickListener(v -> {
-            myViewModel.bTeamAdd(2);
-
+//            myViewModel.bTeamAdd(2);
+//            myViewModel.getResult();
             tvAddB.postDelayed(() -> {
-//                myViewModel.getResult();
-                Log.e("ViewModelActivity","tvAddB");
+                myViewModel.bTeamAdd(2);
+                myViewModel.getResult();
+//                Log.e("ViewModelActivity","tvAddB");
             }, 2000);
         });
 
