@@ -8,7 +8,8 @@ package com.wbj.algorithm;
  */
 public class DuotaiExtendsTest {
 
-    public static void test(){
+
+    private synchronized void test(){
 
     }
 }

@@ -48,15 +48,21 @@ class MainActivity : AppCompatActivity() {
             val result1 = suspendAnalogRequest1()
             val end = System.currentTimeMillis()
 
-            cancel()//TODO取消
-
             //模拟耗时操作2
             val start2 = System.currentTimeMillis()
-//            val result2= withContext(Dispatchers.IO){
-//                analogRequest2()
-//            }
+
+
             val result2 = asuspendAnalogRequest2()
             val end2 = System.currentTimeMillis()
+            cancel()
+            println("cancel()---》1")
+            Toast.makeText(this@MainActivity,"result1  result2",Toast.LENGTH_LONG).show()
+            val sss1 = suspendAnalogRequest1()
+
+            println("cancel()---》2")
+
+
+
 
             //两次请求结束，合并数据显示
             withContext(Dispatchers.Main){
@@ -80,32 +86,29 @@ class MainActivity : AppCompatActivity() {
      * 模拟耗时的网络请求2
      */
     private fun analogRequest1():String{
-
-            var sum = 0
-            repeat(10000000){
-                sum += it
-            }
-            Thread.sleep(200)
-            return "结果：$sum"
+        var sum = 0
+        repeat(10000000){
+            sum += it
         }
-
+        return "结果：$sum"
     }
     /**
      * 模拟耗时的网络请求2
      */
-    private suspend fun  suspendAnalogRequest1():String{
-        return withContext(Dispatchers.IO) {
-             analogRequest1()
+    private suspend fun  suspendAnalogRequest1():String {
+        return withContext(Dispatchers.Main) {
+            "jfjfjfjfjfj"
         }
+//        return analogRequest1()
     }
 
     /**
      * 模拟耗时的网络请求
      */
     private fun analogRequest2():String{
-        var sum:Long = 0
+        var sum = 0
         repeat(100000000){
-            sum += it * 17985 + 14532
+            sum += it
         }
         return "结果：$sum"
     }
@@ -113,9 +116,8 @@ class MainActivity : AppCompatActivity() {
      * 模拟耗时的网络请求
      */
     private suspend fun asuspendAnalogRequest2():String{
-        return withContext(Dispatchers.IO) {
-            analogRequest2()
-        }
+        return analogRequest2()
     }
 
 
+}
