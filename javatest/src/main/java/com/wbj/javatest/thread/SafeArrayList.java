@@ -15,26 +15,68 @@ public class SafeArrayList {
     private static AtomicInteger mAtomicInteger = new AtomicInteger(0);
 
     public static void main(String[] args) {
-        for (int i = 0; i < 100000; i++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    addData();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 200000; i++) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+//                    addData();
+                            InstanceUtil.getInstanceUtil().log(Thread.currentThread().getName());
+                        }
+                    }).start();
                 }
-            }).start();
-        }
-        for (int i = 0; i < 100000; i++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    addData();
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 200000; i++) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+//                    addData();
+                            InstanceUtil.getInstanceUtil().log(Thread.currentThread().getName());
+                        }
+                    }).start();
                 }
-            }).start();
-        }
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 200000; i++) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+//                    addData();
+                            InstanceUtil.getInstanceUtil().log(Thread.currentThread().getName());
+                        }
+                    }).start();
+                }
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 200000; i++) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+//                    addData();
+                            InstanceUtil.getInstanceUtil().log(Thread.currentThread().getName());
+                        }
+                    }).start();
+                }
+            }
+        }).start();
     }
 
     private static int size = 0;
-    public static void addData(){
+
+    public static void addData() {
         mAtomicInteger.incrementAndGet();
         mList.add(size++);
         mList.remove(size);
