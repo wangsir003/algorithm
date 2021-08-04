@@ -25,33 +25,40 @@ class SurfView : View {
         defStyleAttr
     )
 
+
     private var TAG = "SurfView"
     private var mPaint: Paint? = null
-    private var mSpace: Int = 20
+    //每个滑块宽度
     private var mPerWidth: Int = 20
+    //滑块间隔
+    private var mSpace: Int = 20
+    //滑块最大高度
     private var mMaxHeight: Int = 50
+    //滑块数量
     private var mCount: Int = 3
+    //每组滑块的数量，用于滑块数量多时呈现波浪效果
     private var mGroupChild: Int = 3
-    private var mMode: Int = 0//mode 0 从中间上下波动 //mode 1 从底部上下波动
+    //mode 0 从中间上下波动 //mode 1 从底部上下波动
+    private var mMode: Int = 0
+    //滑块的圆角
     private var mRaidus: Int = 0
-
-    private var mNeedReverse = false
-
-    private var mCurrHeight = mMaxHeight //权值为-2， 顶部底部计算用加减权值的方式
-    private var mWidget = if (mMode == 0) {
+    //滑块高度变化时的权重，越小越丝滑
+    private var mWeight = if (mMode == 0) {
         mMaxHeight / 2 / mCount / 4
     } else {
         mMaxHeight / mCount / 4
-    } //权值为-2， 顶部底部计算用加减权值的方式
-
-    private var mArr = SparseIntArray()
+    }
+    //记录每个滑块顶部
+    private var mArrTop = SparseIntArray()
+    //记录每个滑块是否需要反向
     private var mRevers = SparseBooleanArray()
+    //当前要画的 滑块的 l t r b 坐标
+    private val mRectF = RectF()
 
 
     private fun init() {
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mPaint!!.color = Color.BLACK
-        Log.e(TAG, "mCurrHeight-wedget=$mWidget")
     }
 
     fun setSlideCount(count: Int) {
@@ -94,70 +101,86 @@ class SurfView : View {
         mRaidus = radius
     }
 
+    /**
+     * 计算宽高，宽为滑块数量宽度和 + 间隔和
+     * 高为maxHeight
+     */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        //计算宽高
         setMeasuredDimension(mCount * mPerWidth + mSpace * mCount, mMaxHeight)
     }
 
-    //    val rect = Rect(it * (mPerWidth + mSpace),0,it * mPerWidth + mPerWidth + mSpace * it,mMaxHeight)
-    private val mRectF = RectF()
-
+    /**
+     * 初始化每个滑块的顶部位置,需区分滑动模式
+     */
     fun initArr() {
-        mArr.clear()
+        mArrTop.clear()
         if (mMode == 0) {
-//            mGroupChild
             repeat(mCount) {
-                val result = it / mGroupChild
+                //该计算是为了呈现波浪效果
+//                val result = it / mGroupChild
+//                val perH = mMaxHeight / 2 / mGroupChild //每份高度
+//                if (result % 2 == 0) {//偶数
+//                    mArrTop.put(it, mMaxHeight / 2 - perH * (it % mGroupChild))
+//                } else {//奇数
+//                    mArrTop.put(it, mMaxHeight / 2 - perH * ((mGroupChild - 1) - it % mGroupChild))
+//                }
                 val perH = mMaxHeight / 2 / mGroupChild //每份高度
-                if (result % 2 == 0) {//偶数
-                    mArr.put(it, mMaxHeight / 2 - perH * (it % mGroupChild))
-                } else {//奇数
-                    mArr.put(it, mMaxHeight / 2 - perH * ((mGroupChild - 1) - it % mGroupChild))
+                //和上一个对比
+                if (it <= 1){
+                    mArrTop.put(it, mMaxHeight - perH * (it % (mGroupChild)))
+                }else {
+                    //判断 是递增还是递减
+                    if (mArrTop[it - 1] < mArrTop[it - 2]){//递减
+                        if (mArrTop[it - 1] == 0){
+                            mArrTop.put(it,perH)
+                        } else if (mArrTop[it - 1] < perH){
+                            mArrTop.put(it,0)
+                        }else{
+                            mArrTop.put(it,mArrTop[it - 1] - perH)
+                        }
+                    }else{//递增
+                        if (mArrTop[it - 1] == mMaxHeight){
+                            mArrTop.put(it,mMaxHeight - perH)
+                        }else{
+                            mArrTop.put(it,mArrTop[it - 1] + perH)
+                        }
+                    }
                 }
             }
         } else {
             repeat(mCount) {
-//                val perH = mMaxHeight / mGroupChild //每份高度
-//                mArr.put(it, mMaxHeight - perH * (it % (mGroupChild * 2)))
-
-                val result = it / mGroupChild
                 val perH = mMaxHeight /(mGroupChild - 1) //每份高度
-                //和上一个对比
                 if (it <= 1){
-                    mArr.put(it, mMaxHeight - perH * (it % (mGroupChild)))
+                    mArrTop.put(it, mMaxHeight - perH * (it % (mGroupChild)))
                 }else {
                     //判断 是递增还是递减
-                    if (mArr[it - 1] < mArr[it - 2]){//递减
-                        if (mArr[it - 1] == 0){
-                            mArr.put(it,perH)
-                        } else if (mArr[it - 1] < perH){
-                            mArr.put(it,0)
+                    if (mArrTop[it - 1] < mArrTop[it - 2]){//递减
+                        if (mArrTop[it - 1] == 0){
+                            mArrTop.put(it,perH)
+                        } else if (mArrTop[it - 1] < perH){
+                            mArrTop.put(it,0)
                         }else{
-                            mArr.put(it,mArr[it - 1] - perH)
+                            mArrTop.put(it,mArrTop[it - 1] - perH)
                         }
                     }else{//递增
-                        if (mArr[it - 1] == mMaxHeight){
-                            mArr.put(it,mMaxHeight - perH)
-                        }/*else if (mMaxHeight - mArr[it - 1] <= perH){
-                            mArr.put(it,mMaxHeight)
-                        }*/else{
-                            mArr.put(it,mArr[it - 1] + perH)
+                        if (mArrTop[it - 1] == mMaxHeight){
+                            mArrTop.put(it,mMaxHeight - perH)
+                        }else{
+                            mArrTop.put(it,mArrTop[it - 1] + perH)
                         }
                     }
                 }
             }
         }
-        mArr.forEach { key, value ->
+        mArrTop.forEach { key, value ->
             mRevers.put(key, false)
         }
-
-        mArr.forEach { key, value ->
+        mArrTop.forEach { key, value ->
             Log.e(TAG, "初始化值为：key=${key} | value = $value")
         }
 
     }
-
 
     override fun onDraw(canvas: Canvas?) {
         repeat(mCount) {
@@ -173,15 +196,14 @@ class SurfView : View {
     }
 
     private fun getTop(pos: Int): Int {
-        var currHeight = mArr[pos]
-        Log.e(TAG, "mCurrHeight----top=$currHeight --size=${mArr.size()}")
+        var currHeight = mArrTop[pos]
+        Log.e(TAG, "mCurrHeight----top=$currHeight --size=${mArrTop.size()}")
         var needReverse = mRevers[pos]
         if (mMode == 0) {//从中间波动
-//            mCurrHeight -= pos * mWidget
             if (!needReverse) {
-                currHeight -= mWidget
+                currHeight -= mWeight
             } else {
-                currHeight += mWidget
+                currHeight += mWeight
             }
 
             if (currHeight >= mMaxHeight) {//需要反转
@@ -191,19 +213,16 @@ class SurfView : View {
                 needReverse = !needReverse
                 currHeight = 0
             }
-            mArr.put(pos, currHeight)
+            mArrTop.put(pos, currHeight)
             mRevers.put(pos, needReverse)
             Log.e(TAG, "mCurrHeight-top=$currHeight")
             return currHeight
         } else {//以bottom为底波动
-//            currHeight -= mWidget
-
             if (!needReverse) {
-                currHeight -= mWidget
+                currHeight -= mWeight
             } else {
-                currHeight += mWidget
+                currHeight += mWeight
             }
-
             if (currHeight >= mMaxHeight) {//需要反转
                 currHeight = mMaxHeight
                 needReverse = !needReverse
@@ -211,27 +230,16 @@ class SurfView : View {
                 needReverse = !needReverse
                 currHeight = 0
             }
-
-//            if (needReverse && currHeight < 0) {
-//                currHeight += mWidget
-//                Log.e(TAG, "mCurrHeight-top0=${mCurrHeight + mWidget}")
-//            } else {
-//                Log.e(TAG, "mCurrHeight-top1=$mCurrHeight")
-//                if (currHeight <= 0) {
-//                    needReverse = true
-//                }
-//            }
-            mArr.put(pos, currHeight)
+            mArrTop.put(pos, currHeight)
             mRevers.put(pos, needReverse)
+            Log.e(TAG, "mCurrHeight2-top=$currHeight")
             return currHeight
         }
     }
 
     private fun getBottom(pos: Int): Int {
         if (mMode == 0) {
-//            Log.e(TAG,"mCurrHeight-bottom=$mCurrHeight")
-            Log.e(TAG, "mCurrHeight=${mCurrHeight}---bottom=$${mMaxHeight - mCurrHeight}")
-            return mMaxHeight - mArr[pos]
+            return mMaxHeight - mArrTop[pos]
         } else {
             return mMaxHeight
         }

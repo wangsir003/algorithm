@@ -1,5 +1,7 @@
 package com.wbj.javatest.thread;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
@@ -16,9 +18,8 @@ import java.util.logging.Handler;
 public class ThreadPoolTest {
     public static void main(String[] args) {
 
-        final ThreadPoolExecutor service = new ThreadPoolExecutor(0,1000,10, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+        final ThreadPoolExecutor service = new ThreadPoolExecutor(2,1000,10, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
 //        new ThreadPoolExecutor()
-
         for (int i = 0; i < 1000; i++) {
             Runnable runnable = new Runnable() {
                 @Override
@@ -38,7 +39,23 @@ public class ThreadPoolTest {
             service.execute(runnable);
 
         }
-        int activeCount = service.getActiveCount();
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //通过延时可发现，ThreadPoolExecutor中的Runable执行完之后会被回收
+                int activeCount = service.getActiveCount();
+                long getTaskCount = service.getTaskCount();
+                long getCompletedTaskCount = service.getCompletedTaskCount();
+                long getCorePoolSize = service.getCorePoolSize();
+                System.out.println("activeCount" + activeCount);
+                System.out.println("getTaskCount" + getTaskCount);
+                System.out.println("getCompletedTaskCount" + getCompletedTaskCount);
+                System.out.println("getCorePoolSize" + getCorePoolSize);
+            }
+        },1000 * 10);
+
 //        long taskCount = service.getTaskCount();
 //        long completedTaskCount = service.getCompletedTaskCount();
     }

@@ -16,11 +16,49 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    signingConfigs {
+        signing {
+            keyAlias 'testmulapk'
+            keyPassword '123456'
+            storeFile file("${rootDir}/app/testmulapk.jks")
+            storePassword '123456'
         }
+    }
+
+    buildTypes {
+        buildTypes {
+            debug {
+                resValue 'string', 'app_name', '葫芦测试版'
+                applicationIdSuffix ".debug"
+                minifyEnabled false
+                zipAlignEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.signing
+            }
+
+            dev {
+                resValue 'string', 'app_name', '葫芦兽预览'
+                applicationIdSuffix ".dev"
+                minifyEnabled false
+                zipAlignEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.signing
+            }
+
+            release {
+                resValue 'string', 'app_name', '葫芦兽正式'
+                minifyEnabled false//开启混淆
+                shrinkResources false
+                zipAlignEnabled true//去除无用资源
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.signing
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

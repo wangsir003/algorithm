@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
 
-        ViewGroup
         int[] arr = new int[10];
         for (int i = 0;i < 10 ;i++){
             arr[i] = (int) (Math.random() * 10);
