@@ -2,6 +2,7 @@ package com.tbb.vip.measure;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,7 +12,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tbb.vip.measure.facequestion.MainActivityFace;
+
 import org.w3c.dom.Text;
+
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         setContentView(R.layout.activity_main);
         switchDis = findViewById(R.id.switchDis);
         switchInt = findViewById(R.id.switchInt);
+        findViewById(R.id.jump_face).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, MainActivityFace.class)));
         switchTouchEvent = findViewById(R.id.switchTouchEvent);
 
         switchDisView = findViewById(R.id.switchDisView);
@@ -52,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 //            }
 //        });
 
-        myView.setOnClickListener(new View.OnClickListener() {
+        /*myView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "点击了myView", Toast.LENGTH_SHORT).show();
@@ -66,32 +72,30 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                 Toast.makeText(MainActivity.this, "点击了myViewGroup", Toast.LENGTH_SHORT).show();
 //                TouchLoger.getInstance().clearLog();
             }
-        });
+        });*/
 
 
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isSelected) {
-        if (compoundButton == switchDis){
+        if (compoundButton == switchDis) {
             TouchLoger.getInstance().setDispatchOfGroup(isSelected);
-        }else if (compoundButton == switchInt){
+        } else if (compoundButton == switchInt) {
             TouchLoger.getInstance().setIntercepthOfGroup(isSelected);
-        }else if (compoundButton == switchTouchEvent){
+        } else if (compoundButton == switchTouchEvent) {
             TouchLoger.getInstance().setTouchEventOfGroup(isSelected);
-        }else if (compoundButton == switchDisView){
+        } else if (compoundButton == switchDisView) {
             TouchLoger.getInstance().setDispatchOfView(isSelected);
-        }else if (compoundButton == switchTouchEventView){
+        } else if (compoundButton == switchTouchEventView) {
             TouchLoger.getInstance().setTouchEventOfView(isSelected);
         }
     }
-
-
-
-
-
-
 
 
 }

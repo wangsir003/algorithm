@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dip"
+    android:layout_height="300dip">
+
+    <com.tbb.vip.measure.facequestion.MyLinearLayoutRed
+        android:id="@+id/red"
+        android:layout_width="300dip"
+        android:layout_height="300dip"
+        android:background="#f00">
+
+        <com.tbb.vip.measure.facequestion.MyLinearLayoutGreen
+            android:id="@+id/green"
+            android:layout_width="200dip"
+            android:layout_height="200dip"
+            android:background="#0f0">
+
+            <com.tbb.vip.measure.facequestion.MyView1
+                android:id="@+id/yellow"
+                android:layout_width="130dip"
+                android:layout_height="130dip"
+                android:background="#FFF68F	" />
+        </com.tbb.vip.measure.facequestion.MyLinearLayoutGreen>
+    </com.tbb.vip.measure.facequestion.MyLinearLayoutRed>
+</FrameLayout>

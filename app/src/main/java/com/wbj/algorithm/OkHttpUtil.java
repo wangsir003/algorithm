@@ -23,6 +23,7 @@ import okhttp3.Response;
 public class OkHttpUtil {
     public static void getOkHttp(){
         OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.connectionPool().
         Request request = new Request.Builder()
                 .get()
                 .addHeader("","")

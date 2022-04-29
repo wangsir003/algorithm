@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel;
  * 描述：
  */
 public class MyViewModel extends ViewModel {
-    private MutableLiveData<Integer> aTeamScore; //a队的分数
+     MutableLiveData<Integer> aTeamScore; //a队的分数
     private MutableLiveData<Integer> bTeamScore; //b队的分数
     private MutableLiveData<String> mResult; //比赛结果
     private int aBack,bBack; //用于Undo操作的上一次各队分数

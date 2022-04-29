@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
             val result2 = asuspendAnalogRequest2()
             val end2 = System.currentTimeMillis()
-            cancel()
+//            cancel()
             println("cancel()---》1")
             Toast.makeText(this@MainActivity,"result1  result2",Toast.LENGTH_LONG).show()
             val sss1 = suspendAnalogRequest1()
